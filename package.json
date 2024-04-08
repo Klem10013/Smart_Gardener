@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "@azure/arm-iothub": "^6.3.0",
+    "@azure/identity": "^4.0.1",
+    "@azure/service-bus": "^7.9.4",
+    "azure-iot-common": "^1.13.2",
+    "azure-iothub": "^1.16.5",
+    "express": "^4.19.2",
+    "path": "^0.12.7",
+    "uuid": "^9.0.1"
+  }
+}
