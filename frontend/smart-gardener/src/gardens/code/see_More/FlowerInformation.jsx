@@ -25,7 +25,7 @@ function FlowerInformation() {
     }, []);
 
     const handleSeeInfos = () => {
-
+        
     };
 
     const handleDelete = (index) => {
