@@ -166,7 +166,7 @@ router.post("/get_data_garden",async (req,res,_next) =>
 })
 
 
-router.delete("/delete_garden",async (req,res,_next) =>
+router.post("/delete_garden",async (req,res,_next) =>
 {
     console.log("Delet_garden")
     const resJson = req.body;

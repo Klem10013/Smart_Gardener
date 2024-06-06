@@ -50,7 +50,7 @@ router.post("/add_flower", async (req, res, _next) => {
 })
 
 
-router.delete("/delete_flower", async (req, res, _next) => {
+router.post("/delete_flower", async (req, res, _next) => {
     console.log("Delet_garden")
     const resJson = req.body;
     const Response = {
