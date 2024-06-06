@@ -31,15 +31,14 @@ function ConnectUser(){
             "pwd":password
         };
 
-        console.log(formData);
-
         try {
-            const response = await axios.post(ADDR + 'connect_user', formData);
+            const response = await axios.post(ADDR + 'user/connect_user', formData);
             setFirstname("");
             setSurname("");
             setPassword("");
-            if (response.data.status !== "Bad" || response.data.status !== "Error" ){
-                setCookie(response.data.message);
+            const parseRep = JSON.parse(response.data);
+            if (parseRep.status !== "Bad" && parseRep.status !== "Error" ){
+                setCookie("user",parseRep.message);
                 window.location.href = `/gardens`;
             } else {
                 setErrorMessage("Names and password doesn't match.");
