@@ -22,17 +22,16 @@ function UserInformation() {
                 formData
             );
             const data = response.data.message;
-            console.log("test");
-            member.push(data.member[0])
-            console.log(data.member);
+            console.log("Data received from API:", data);
+            setMember(data.member);
         } catch (e) {
-            console.error(e);
+            console.error("Error fetching data from API:", e);
         }
-    }, [cookie.id_Garden, cookie.user.id, cookie.user.pwd,member]);
+    }, [cookie.id_Garden, cookie.user.id, cookie.user.pwd]);
 
     useEffect(() => {
-       // Come();
-    }, []);
+        Come();
+    }, [Come]);
 
     return (
         <>
@@ -41,7 +40,7 @@ function UserInformation() {
                     <div key={"title_hours"} className="header">
                         All Members
                     </div>
-                    {member !== undefined &&
+                    {member &&
                         member.map((mem) => {
                             return (
                                 <div
@@ -49,8 +48,8 @@ function UserInformation() {
                                     style={{ paddingTop: 5 }}
                                     key={mem}
                                 >
-                                    {//cookie.user.gardens.map((garden, index) => (
-                                        ((<div className="garden-card" key={mem.last_name}>
+                                    {cookie.user.gardens.map((garden, index) => (
+                                        <div className="garden-card" key={mem.last_name}>
                                             <div className="title-container">
                                                 <h2>{mem.last_name}</h2>
                                             </div>

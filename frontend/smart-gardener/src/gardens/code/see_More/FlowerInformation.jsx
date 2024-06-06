@@ -38,28 +38,7 @@ function FlowerInformation() {
 
     return (<>
             <Container>
-                <Row style={{border: "2px solid #ccc" , background : "#B7B597"}}>
-                    <div key={"title_hours"} className="header">All Flowers
-                    </div>
-                    {flower.map((mem, index) => {
-                        return (<ListGroup style={{border: "2px solid #ccc"}}>
-                            <div className={"container"} style={{position: "relative"}}>
-                                <div style={{
-                                    paddingTop: 20,
-                                    position: "relative",
-                                    left: "auto",
-                                    textAlign: "left",
-                                    fontSize: 13
-                                    }}>
-                                    <p style={{marginBottom: 5}}><b>Flower Name : </b> {mem.first_name}</p>
-                                    <p style={{marginBottom: 20}}><b>Flower Temp : </b>{mem.last_name}</p>
-                                    <button onClick={()=>handleSeeInfos(/*voir c'est quelle fleur*/)} className="see-details-button">See Details</button>
-                                    <button onClick={()=>handleDelete(index)} className="delete-button">Delete</button>
-                                </div>
-                            </div>
-                        </ListGroup>)
-                    })}
-                    <button onClick={()=>handleAddFlower()} className="add-button">Add</button>
+                <Row>
                 </Row>
             </Container>
         </>
