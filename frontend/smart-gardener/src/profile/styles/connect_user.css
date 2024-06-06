@@ -1,0 +1,46 @@
+#connect-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.padding-center-logo {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.connect-field {
+    margin-bottom: 20px;
+}
+
+.connect-label {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.connect-input {
+    width: 100%;
+    padding: 5px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+#connect-submit {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+}
+
+#connect-submit:hover {
+    background-color: #0056b3;
+}
+
+#connect-errorMessage {
+    color:red
+}
