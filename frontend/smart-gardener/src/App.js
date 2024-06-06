@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import CreateUser from './profile/code/create_user';
 import ConnectUser from "./profile/code/connect_user";
 import Gardens from "./gardens/code/gardens";
+import CreateGarden from "./gardens/code/create_garden";
 
 import Body from "./homepage/code/bodyhome";
 
@@ -21,6 +22,7 @@ function App() {
                 <Route path="/connect_user" element={<ConnectUser/>} />
                 <Route path="/seeDetails" element={<SeeDetails/>}/>
                 <Route path="/gardens" element={<Gardens/>} />
+                <Route path="/create_garden" element={<CreateGarden/>} />
             </Routes>
         </Router>  
     </div>)
