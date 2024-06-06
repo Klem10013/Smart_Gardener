@@ -32,9 +32,8 @@ async function readDataRout(entityName) {
 }
 
 
-async function send_email_to_resp(addr,subject,text)
-{
-    await email.send_mail(addr,subject,text)
+async function send_email_to_resp(addr, subject, text) {
+    await email.send_mail(addr, subject, text)
 }
 
 
@@ -48,14 +47,13 @@ async function add_garden(data) {
     data.token = Uuid.v4();
     const log =
         {
-            id:data.id,
-            log : [],
+            id: data.id,
+            log: [],
         }
     const allData_Garden = [data, ...olderData_Garden];
     const allData_Log = [log, ...olderData_Log];
     await write_file(filename_Garden, JSON.stringify(allData_Garden))
-    await write_file(filename_Log,JSON.stringify(allData_Log));
-
+    await write_file(filename_Log, JSON.stringify(allData_Log));
 
 
     return data;
@@ -72,28 +70,23 @@ async function add_user(data) {
     return data;
 }
 
-async function add_data(data,garden,token)
-{
-    if (token === undefined || garden.id === undefined || garden.plant_id === undefined)
-    {
+async function add_data(data, garden, token) {
+    if (token === undefined || garden.id === undefined || garden.plant_id === undefined) {
         return false;
     }
     const garden_id = garden.id;
     const Data = await readDataRout(GARDEN)
     const Garden_index = await Data.findIndex((garden) => (garden.id === garden_id));
-    if (Garden_index === -1)
-    {
+    if (Garden_index === -1) {
         return false;
     }
     const Garden = Data[Garden_index];
-    if (Garden.token !== token)
-    {
+    if (Garden.token !== token) {
         return false;
     }
 
     const plt = await Garden.flower_id.find((plants) => (plants === garden.plant_id))
-    if (plt === undefined)
-    {
+    if (plt === undefined) {
         return false;
     }
     const DataLog = await readDataRout(LOG);
@@ -101,19 +94,15 @@ async function add_data(data,garden,token)
     const Log = DataLog[Log_Garden_Index];
     const Log_flower_index = await Log.log.findIndex((id) => (id.id === garden.plant_id));
     const Flower = Log.log[Log_flower_index]
-    if (data.temperature !== undefined)
-    {
+    if (data.temperature !== undefined) {
         Flower.temperature.push(data.temperature)
-        if (Flower.temperature.length>MAX_LOG)
-        {
+        if (Flower.temperature.length > MAX_LOG) {
             Flower.temperature.shift()
         }
     }
-    if (data.soil !== undefined)
-    {
+    if (data.soil !== undefined) {
         Flower.soil.push(data.soil)
-        if (Flower.soil.length>MAX_LOG)
-        {
+        if (Flower.soil.length > MAX_LOG) {
             Flower.soil.shift()
         }
     }
@@ -122,53 +111,46 @@ async function add_data(data,garden,token)
 
     let sum_t = 0;
     let sum_s = 0;
-    Flower.temperature.forEach( num => {
+    Flower.temperature.forEach(num => {
         sum_t += num;
     })
-    Flower.soil.forEach(num =>
-    {
+    Flower.soil.forEach(num => {
         sum_s += num;
     })
 
-    const temp_m = sum_t/Flower.temperature.length;
-    const soil_m = sum_s/Flower.soil.length;
+    const temp_m = sum_t / Flower.temperature.length;
+    const soil_m = sum_s / Flower.soil.length;
 
     const All_flower = await readDataRout(FLOWER);
     const this_f = All_flower.find((f) => f.id === garden.plant_id)
 
-    if (soil_m < DRY || soil_m > WATER || temp_m<MIN_TEMP || temp_m>MAX_TEMP)
-    {
+    if (soil_m < DRY || soil_m > WATER || temp_m < MIN_TEMP || temp_m > MAX_TEMP) {
         is_good = false
     }
 
 
     let send_email = false
-    if (is_good !== Flower.last_check)
-    {
+    if (is_good !== Flower.last_check) {
         console.log(Log.last_check)
-        console.log(typeof(Log.last_check))
+        console.log(typeof (Log.last_check))
         send_email = true
     }
     Flower.last_check = is_good
-    await write_file(LOG,JSON.stringify(DataLog));
+    await write_file(LOG, JSON.stringify(DataLog));
 
 
-
-    if (send_email)
-    {
+    if (send_email) {
         const All_user = await readDataRout(USER)
         const members = Garden.member
         let subject = "Smart Gardener information about the watering"
         let text = "The soil need to be check in a short amount of time"
-        if (is_good)
-        {
+        if (is_good) {
             text = "The soil is back to normal"
         }
-        for(let i = 0;i<members.length;i++)
-        {
+        for (let i = 0; i < members.length; i++) {
             console.log(members[i])
             const us = await All_user.find((usr) => (usr.id === members[i]))
-            await send_email_to_resp(us.last_name,subject,text)
+            await send_email_to_resp(us.last_name, subject, text)
         }
     }
 
@@ -177,9 +159,8 @@ async function add_data(data,garden,token)
 }
 
 
-async function add_plant(garden,plant){
-    if (garden.id === undefined || plant.id === undefined)
-    {
+async function add_plant(garden, plant) {
+    if (garden.id === undefined || plant.id === undefined) {
         return false;
     }
     const garden_id = garden.id;
@@ -187,85 +168,76 @@ async function add_plant(garden,plant){
     const Data_Plant = await readDataRout(FLOWER);
     const Garden_index = await Data.findIndex((garden) => (garden.id === garden_id));
     const Plant_index = await Data_Plant.findIndex((plants) => (plants.id === plant.id));
-    if (Garden_index === -1 || Plant_index === -1)
-    {
+    if (Garden_index === -1 || Plant_index === -1) {
         return false;
     }
     const Garden = Data[Garden_index];
     const plt = await Garden.flower_id.find((plants) => (plants === plant.id))
-    if (plt !== undefined)
-    {
+    if (plt !== undefined) {
         return false;
     }
 
     Data[Garden_index].flower_id.push(plant.id);
-    await write_file(GARDEN,JSON.stringify(Data))
+    await write_file(GARDEN, JSON.stringify(Data))
     const DataLog = await readDataRout(LOG);
     const Log = DataLog[await DataLog.findIndex((log) => (log.id === Garden.id))]
     const Flower = {
-        id : plant.id,
+        id: plant.id,
         temperature: [],
         soil: []
     }
     Log.log.push(Flower);
-    await write_file(LOG,JSON.stringify(DataLog));
+    await write_file(LOG, JSON.stringify(DataLog));
     return true;
 }
 
 
-async function add_user_to_garden(owner,user_id,garden_id)
-{
-    if ((!(await check_mdp(owner))) || (!(await user_exist(user_id,garden_id))) || (!(await user_in_garden(owner.id,garden_id))))
-    {
+async function add_user_to_garden(owner, user_id, garden_id) {
+    if ((!(await check_mdp(owner))) || (!(await user_exist(user_id, garden_id))) || (!(await user_in_garden(owner.id, garden_id)))) {
         return false
     }
     const Data = await readDataRout(GARDEN)
     const Garden = await Data.findIndex((garden) => (garden.id === garden_id));
-    if (Garden === -1)
-    {
+    if (Garden === -1) {
         return false;
     }
     const User_in_Garden = await Data[Garden].member.find((user) => (user === user_id))
-    if (User_in_Garden !== undefined)
-    {
+    if (User_in_Garden !== undefined) {
         return false;
     }
     Data[Garden].member.push(user_id);
-    await write_file(GARDEN,JSON.stringify(Data));
+    await write_file(GARDEN, JSON.stringify(Data));
     return true;
 }
 
 
 async function check_mdp(user) {
     console.log("Check user pwd of user : " + user)
-    return (user.id !== undefined && user.pwd !== undefined) && ((await(await readDataRout(USER)).find((user_f) => (user_f.id === user.id && user_f.pwd === user.pwd))) !== undefined)
+    return (user.id !== undefined && user.pwd !== undefined) && ((await (await readDataRout(USER)).find((user_f) => (user_f.id === user.id && user_f.pwd === user.pwd))) !== undefined)
 
 }
 
-async function user_in_garden(user_id,garden_id)
-{
+async function user_in_garden(user_id, garden_id) {
     return (garden_id !== undefined && user_id !== undefined) &&
-        ((await(await readDataRout(USER)).find((user) => (user.id === user_id))) !== undefined) &&
-        ((await(await readDataRout(GARDEN)).find((garden) => (garden.id === garden_id))) !== undefined) &&
-        ((await((await(await readDataRout(GARDEN)).find((garden) => (garden.id === garden_id))).member).find((user) => (user === user_id))) !== undefined)
+        ((await (await readDataRout(USER)).find((user) => (user.id === user_id))) !== undefined) &&
+        ((await (await readDataRout(GARDEN)).find((garden) => (garden.id === garden_id))) !== undefined) &&
+        ((await ((await (await readDataRout(GARDEN)).find((garden) => (garden.id === garden_id))).member).find((user) => (user === user_id))) !== undefined)
 }
 
-async function is_owner_garden(user_id,garden_id)
-{
+async function is_owner_garden(user_id, garden_id) {
     return (garden_id !== undefined && user_id !== undefined) &&
-        ((await(await readDataRout(USER)).find((user) => (user.id === user_id))) !== undefined) &&
-        ((await(await readDataRout(GARDEN)).find((garden) => (garden.id === garden_id))) !== undefined) &&
+        ((await (await readDataRout(USER)).find((user) => (user.id === user_id))) !== undefined) &&
+        ((await (await readDataRout(GARDEN)).find((garden) => (garden.id === garden_id))) !== undefined) &&
         (await readDataRout(GARDEN)).find((garden) => (garden.id === garden_id)).ownerId === user_id
 }
 
-async function user_exist(user_id,garden_id)
-{
+async function user_exist(user_id, garden_id) {
     return (user_id !== undefined) &&
-           ((await(await readDataRout(USER)).find((user) => (user.id === user_id))) !== undefined)
+        ((await (await readDataRout(USER)).find((user) => (user.id === user_id))) !== undefined)
 }
 
-async function get_all_data(user,garden_id) {
-    if ((!(await check_mdp(user))) || (!(await user_exist(user.id))) || (!(await user_in_garden(user.id,garden_id)))) {
+async function get_all_data(user, garden_id) {
+    if ((!(await check_mdp(user))) || (!(await user_exist(user.id))) || (!(await user_in_garden(user.id, garden_id)))) {
         return false
     }
     const Data_G = await readDataRout(GARDEN)
@@ -282,13 +254,11 @@ async function get_all_data(user,garden_id) {
     this_garden.flower_id = []
     this_garden.member = []
     this_garden.log = Data_L.find((log) => (log.id === this_garden.id))
-    for (let i = 0 ; i<flowers.length;i++)
-    {
+    for (let i = 0; i < flowers.length; i++) {
         const flower = Data_F.find((flow) => (flow.id === flowers[i]))
         this_garden.flower_id.push(flower)
     }
-    for (let i = 0 ; i<members.length;i++)
-    {
+    for (let i = 0; i < members.length; i++) {
         const member = Data_U.find((flow) => (flow.id === members[i]))
         this_garden.member.push(member)
     }
@@ -300,11 +270,10 @@ async function get_all_data(user,garden_id) {
 }
 
 
-async function get_garden_from_user(user)
-{
+async function get_garden_from_user(user) {
     const gardens_id = []
     const Data_G = await readDataRout(GARDEN)
-    for (let i = 0;i<Data_G.length;i++) {
+    for (let i = 0; i < Data_G.length; i++) {
         const garden_id = Data_G[i].id
         if (await user_in_garden(user.id, garden_id)) {
             gardens_id.push(garden_id)
@@ -313,49 +282,58 @@ async function get_garden_from_user(user)
     return gardens_id
 }
 
-async function get_user(user)
-{
+async function get_user(user) {
     const Data_U = await readDataRout(USER);
-    const User  = await Data_U.find((us) => (us.first_name === user.first_name && us.last_name === user.last_name && us.pwd === user.pwd))
+    const User = await Data_U.find((us) => (us.first_name === user.first_name && us.last_name === user.last_name && us.pwd === user.pwd))
     return User
 }
 
 
-async function delete_garden(user,garden_id)
-{
-    if (await is_owner_garden(user.id,garden_id))
-    {
+async function delete_garden(user, garden_id) {
+    if (await is_owner_garden(user.id, garden_id)) {
         const Data_G = await readDataRout(GARDEN)
         const Data_L = await readDataRout(LOG)
         const ind = await Data_G.findIndex((gard) => gard.id === garden_id)
         const ind_l = await Data_L.findIndex((log) => log.id === garden_id)
-        Data_G.splice(ind,1)
-        Data_L.splice(ind_l,1)
-        await write_file(GARDEN,JSON.stringify(Data_G));
-        await write_file(LOG,JSON.stringify(Data_L))
+        Data_G.splice(ind, 1)
+        Data_L.splice(ind_l, 1)
+        await write_file(GARDEN, JSON.stringify(Data_G));
+        await write_file(LOG, JSON.stringify(Data_L))
         return true
     }
     return false
 }
 
-async function delete_flower(user,garden_id,plant_id)
-{
-    if (await user_in_garden(user.id,garden_id))
-    {
+async function delete_flower(user, garden_id, plant_id) {
+    if (await user_in_garden(user.id, garden_id)) {
         const Data_G = await readDataRout(GARDEN)
         const ind = await Data_G.findIndex((gard) => gard.id === garden_id)
         const ind_f = Data_G[ind].flower_id.findIndex((f) => (f === plant_id))
-        if (ind_f === -1)
-        {
+        if (ind_f === -1) {
             return false
         }
-        Data_G[ind].flower_id.splice(ind_f,1)
-        await write_file(GARDEN,JSON.stringify(Data_G));
+        Data_G[ind].flower_id.splice(ind_f, 1)
+        await write_file(GARDEN, JSON.stringify(Data_G));
         return true
     }
     return false
 }
 
+
+async function add_flower_db(flower_name) {
+    const All_f = await readDataRout(FLOWER);
+    const flower =
+        {
+            name: flower_name,
+            id: All_f.length.toString()
+        }
+    All_f.push(flower)
+    await write_file(FLOWER,JSON.stringify(All_f))
+}
+
+async function get_flower() {
+    return await readDataRout(FLOWER)
+}
 
 
 module.exports.add_garden = add_garden;
@@ -369,4 +347,6 @@ module.exports.get_garden_from_user = get_garden_from_user
 module.exports.get_user = get_user;
 module.exports.delet_garden = delete_garden
 module.exports.delete_flower = delete_flower
-module.exports.send_email_to_resp = send_email_to_resp
+module.exports.send_email_to_resp = send_email_to_resp;
+module.exports.get_flower = get_flower
+module.exports.add_flower_db = add_flower_db

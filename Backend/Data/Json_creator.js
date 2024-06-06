@@ -16,4 +16,5 @@ const user = {
     first_name : undefined,
     last_name : undefined,
     id_add : undefined,
+    plant_name : undefined
 }
