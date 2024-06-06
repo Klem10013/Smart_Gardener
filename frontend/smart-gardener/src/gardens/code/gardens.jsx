@@ -4,7 +4,16 @@ import { useCookies } from "react-cookie";
 import '../styles/gardens.css';
 
 function Gardens() {
+
     const [cookie] = useCookies(["user"]);
+
+    const handleSeeDetails = (event) => {
+        window.location.href = 'seeDetails'
+    };
+
+    const handleDelete = (event) => {
+        //Del garden
+    };
 
     return (
         <div>
@@ -14,8 +23,8 @@ function Gardens() {
                 {cookie.user.gardens.map((garden, index) => (
                     <div className="garden-card" key={index}>
                         <h2>{garden}</h2>
-                        <button className="see-details-button">See Details</button>
-                        <button className="delete-button">Delete</button>
+                        <button onClick={()=>handleSeeDetails()} className="see-details-button">See Details</button>
+                        <button onClick={()=>handleDelete()} className="delete-button">Delete</button>
                     </div>
                 ))}
             </div>
