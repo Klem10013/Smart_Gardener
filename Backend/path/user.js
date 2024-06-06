@@ -29,4 +29,58 @@ router.post("/create_user",async (req,res,_next) => {
 
 })
 
+router.post("/connect_user",async (req,res,_next) => {
+    console.log("connect of user");
+    const resJson = req.body;
+    const Response = {
+        message: "",
+        status: ""
+    }
+    if (resJson.first_name === undefined || resJson.last_name === undefined || resJson.pwd === undefined)
+    {
+        console.log("connection aboard")
+        Response.status = "Error"
+        Response.message = "Information missing"
+        res.json(JSON.stringify(Response));
+        return;
+    }
+
+    const use =
+        {
+            first_name : resJson.first_name,
+            last_name: resJson.last_name,
+            pwd: resJson.pwd,
+        }
+    const Us = await dml.get_user(use)
+    if (Us === undefined)
+    {
+        console.log("connection aboard")
+        Response.status = "Error"
+        Response.message = "Wrong user"
+        res.json(JSON.stringify(Response));
+        return;
+    }
+    const user = {
+        id : Us.id,
+        pwd : Us.pwd,
+    }
+    console.log(user)
+    if (!await dml.check_mdp(user))
+    {
+        console.log("connection aboard")
+        Response.status = "Error"
+        Response.message = "pwd wrong"
+        res.json(JSON.stringify(Response));
+        return;
+    }
+    const all_g = await dml.get_garden_from_user(user)
+    user.gardens = all_g
+    Response.status = "Good"
+    Response.message = user;
+    res.json(JSON.stringify(Response));
+
+})
+
+
+
 module.exports = router;

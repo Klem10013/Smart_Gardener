@@ -212,6 +212,26 @@ async function get_all_data(user,garden_id) {
 }
 
 
+async function get_garden_from_user(user)
+{
+    const gardens_id = []
+    const Data_G = await readDataRout(GARDEN)
+    for (let i = 0;i<Data_G.length;i++) {
+        const garden_id = Data_G[i].id
+        if (await user_in_garden(user.id, garden_id)) {
+            gardens_id.push(garden_id)
+        }
+    }
+    return gardens_id
+}
+
+async function get_user(user)
+{
+    const Data_U = await readDataRout(USER);
+    const User  = await Data_U.find((us) => (us.first_name === user.first_name && us.last_name === user.last_name && us.pwd === user.pwd))
+    return User
+}
+
 module.exports.add_garden = add_garden;
 module.exports.check_mdp = check_mdp;
 module.exports.add_user = add_user
@@ -219,3 +239,5 @@ module.exports.add_user_to_garden = add_user_to_garden
 module.exports.add_data = add_data
 module.exports.add_plant = add_plant
 module.exports.get_all_data = get_all_data
+module.exports.get_garden_from_user = get_garden_from_user
+module.exports.get_user = get_user;
