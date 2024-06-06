@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {useCookies} from "react-cookie";
-import {Container, Row} from "react-bootstrap";
+import {Container, Row,ListGroup} from "react-bootstrap";
 import axios from "axios";
 import {ADDR} from "../../../App";
 import "../../styles/seeDetails.css"
@@ -28,20 +28,24 @@ function UserInformation() {
     }, []);
     return (<>
             <Container>
-                <Row>
+                <Row style={{border: "2px solid #ccc" , background : "#B7B597"}}>
                     <div key={"title_hours"} className="header">All Members
                     </div>
                     {member.map((mem) => {
-                        return (<div className="gardens-container" style={{paddingTop: 5}}>
-                            {cookie.user.gardens.map((garden, index) => (
-
-                                <div className="garden-card" key={mem.last_name}>
-                                    <div className="title-container">
-                                        <h2>{mem.last_name}</h2>
-                                    </div>
+                        return (<ListGroup style={{border: "2px solid #ccc"}}>
+                            <div className={"container"} style={{position: "relative"}}>
+                                <div style={{
+                                    paddingTop: 20,
+                                    position: "relative",
+                                    left: "auto",
+                                    textAlign: "left",
+                                    fontSize: 13
+                                }}>
+                                    <p style={{marginBottom: 5}}><b>Member Name : </b> {mem.first_name}</p>
+                                    <p style={{marginBottom: 20}}><b>Member Address : </b>{mem.last_name}</p>
                                 </div>
-                            ))}
-                        </div>)
+                            </div>
+                        </ListGroup>)
                     })}
                 </Row>
             </Container>

@@ -10,9 +10,9 @@ function SeeDetails()
     return(<>
         <Container>
             <Row>
-                <Col style={{border: "2px solid #ccc", borderRight: 0}}>
+                <Col>
                 </Col>
-                <Col style={{border: "2px solid #ccc", borderLeft: 0}}>
+                <Col>
                     <div>
                         <UserInformation/>
                     </div>
