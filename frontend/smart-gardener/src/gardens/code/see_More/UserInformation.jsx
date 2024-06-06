@@ -8,7 +8,7 @@ import "../../styles/seeDetails.css"
 function UserInformation() {
 
     const [member, setMember] = useState([])
-    const [cookie, setCookie] = useCookies(["user"]);
+    const [cookie, ] = useCookies(["user"]);
 
     useEffect(() => {
         console.log(cookie.id_Garden)
@@ -25,7 +25,7 @@ function UserInformation() {
             console.log(member)
         });
 
-    }, []);
+    }, [cookie.id_Garden, cookie.user.id, cookie.user.pwd]);
     return (<>
             <Container>
                 <Row>

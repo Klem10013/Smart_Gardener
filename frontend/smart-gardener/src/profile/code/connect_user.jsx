@@ -33,15 +33,18 @@ function ConnectUser(){
 
         try {
             const response = await axios.post(ADDR + 'user/connect_user', formData);
-            setFirstname("");
-            setSurname("");
-            setPassword("");
+            
             if (response.status !== "Bad" && response.status !== "Error" ){
+                response.data.message.first_name = firstname;
+                response.data.message.last_name = surname;
                 setCookie("user",response.data.message);
                 window.location.href = `/gardens`;
             } else {
                 setErrorMessage("Names and password doesn't match.");
             }
+            setFirstname("");
+            setSurname("");
+            setPassword("");
         } catch (error) {
             console.error('Error sending data :', error);
         }

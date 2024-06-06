@@ -1,6 +1,5 @@
-import React, {useEffect} from "react";
+import { React } from "react";
 import {Container, Row, Col,} from 'react-bootstrap';
-import { useCookies } from "react-cookie";
 import UserInformation from "./see_More/UserInformation";
 
 
