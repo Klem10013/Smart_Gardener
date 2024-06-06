@@ -37,7 +37,9 @@ function Gardens() {
         let newGardensList = cookie.user.gardens;
         newGardensList.splice(index, 1);
         cookie.user.gardens = newGardensList;
-        setCookie("user", cookie);
+
+        setCookie("user",cookie);
+
     };
 
     const handleAddGarden = () => {
