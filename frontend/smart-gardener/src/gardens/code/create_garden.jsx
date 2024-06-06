@@ -6,7 +6,7 @@ import { useCookies } from "react-cookie";
 import { ADDR } from '../../App';
 import '../styles/create_user.css';
 
-function CreateUser(){
+function CreateGarden(){
 
     const [name, setName] = useState('');
     const [adress, setAdress] = useState('');
@@ -55,4 +55,4 @@ function CreateUser(){
     
 }
 
-export default CreateUser;
+export default CreateGarden;

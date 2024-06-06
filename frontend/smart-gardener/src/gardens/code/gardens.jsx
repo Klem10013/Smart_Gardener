@@ -8,13 +8,16 @@ function Gardens() {
     const [cookie,setCookie] = useCookies(["user"]);
 
     const handleSeeDetails = (event) =>{
-        console.log(event)
         setCookie("id_Garden",event)
-        window.location.href = 'seeDetails'
+        window.location.href = '/seeDetails'
     };
 
-    const handleDelete = (event) => {
-        //Del garden
+    const handleDelete = (index) => {
+        cookie.user.gardens.splice(index,1);
+    };
+
+    const handleAddGarden = () => {
+        window.location.href = '/create_garden';
     };
 
     return (
@@ -26,12 +29,12 @@ function Gardens() {
                     <div className="garden-card" key={cookie.user.gardens[index]}>
                         <h2>{garden}</h2>
                         <button onClick={()=>handleSeeDetails(cookie.user.gardens[index])} className="see-details-button">See Details</button>
-                        <button onClick={()=>handleDelete()} className="delete-button">Delete</button>
+                        <button onClick={()=>handleDelete(index)} className="delete-button">Delete</button>
                     </div>
                 ))}
             </div>
 
-            <button className="add-button">Add</button>
+            <button onClick={()=>handleAddGarden()} className="add-button">Add</button>
         </div>
     );
 }
