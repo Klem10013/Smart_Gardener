@@ -6,6 +6,7 @@ import '../styles/gardens.css';
 function Gardens() {
 
     const [cookie,setCookie] = useCookies(["user"]);
+    console.log(cookie.user.gardens);
 
     const handleSeeDetails = (event) =>{
         setCookie("id_Garden",event)
@@ -13,7 +14,10 @@ function Gardens() {
     };
 
     const handleDelete = (index) => {
-        cookie.user.gardens.splice(index,1);
+        let newGardensList = cookie.user.gardens;
+        newGardensList.splice(index,1);
+        cookie.user.gardens = newGardensList;
+        setCookie("user",cookie);
     };
 
     const handleAddGarden = () => {
