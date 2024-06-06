@@ -10,7 +10,7 @@ router.post("/add_flower", async (req, res, _next) => {
         message: "",
         status: ""
     }
-    if (resJson.id === undefined || resJson.pwd === undefined || resJson.id_garden === undefined || resJson.plant_id === undefined) {
+    if (resJson.id === undefined || resJson.pwd === undefined || resJson.id_garden === undefined || resJson.plant_id === undefined || resJson.plant_name ===undefined) {
         console.log("Add plant is aboard")
         Response.status = "Error"
         Response.message = "Information missing"
@@ -34,8 +34,9 @@ router.post("/add_flower", async (req, res, _next) => {
         }
     const plant =
         {
-            id: resJson.plant_id,
-        }
+            name: resJson.plant_name,
+            id: resJson.plant_id
+        };
     if (await dml.add_plant(garden, plant)) {
         console.log("Add plant is good")
         Response.status = "Good"
