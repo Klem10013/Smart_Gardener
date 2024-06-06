@@ -38,6 +38,7 @@ function ConnectUser(){
                 response.data.message.first_name = firstname;
                 response.data.message.last_name = surname;
                 setCookie("user",response.data.message);
+
                 window.location.href = `/gardens`;
             } else {
                 setErrorMessage("Names and password doesn't match.");
@@ -84,17 +85,20 @@ function ConnectUser(){
                     <form className="w-75">
                         <div className="form-floating mb-3">
                             <input type="text" className="form-control" id="floatingInput"
-                                   placeholder="name" fdprocessedid="9e89nj"/>
+                                   placeholder="name" fdprocessedid="9e89nj"
+                                   value={firstname} onChange={(event) => setFirstname(event.target.value)}/>
                             <label htmlFor="floatingInput">Name</label>
                         </div>
                         <div className="form-floating mb-3">
                             <input type="email" className="form-control" id="floatingInput"
-                                   placeholder="name@example.com" fdprocessedid="9e89nj"/>
+                                   placeholder="name@example.com" fdprocessedid="9e89nj"
+                                   value={surname} onChange={(event) => setSurname(event.target.value)}/>
                             <label htmlFor="floatingInput">Email address</label>
                         </div>
                         <div className="form-floating mb-3">
                             <input type="password" className="form-control" id="floatingInput"
-                                   placeholder="name@example.com" fdprocessedid="9e89nj"/>
+                                   placeholder="name@example.com" fdprocessedid="9e89nj"
+                                   value={password} onChange={(event) => setPassword(event.target.value)}/>
                             <label htmlFor="floatingInput">Password</label>
                         </div>
                         <button type="submit" className="btn btn-primary w-100" onClick={handleSubmit}>Submit</button>
