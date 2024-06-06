@@ -22,7 +22,7 @@ function UserInformation() {
             const flower = data.flower_id
             console.log(data)
             console.log(flower)
-            setGarden([data])
+            setGarden(data)
             console.log(garden.message.flower_id)
         });
 
