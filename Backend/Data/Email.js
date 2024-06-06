@@ -16,7 +16,7 @@ async function send_mail(email,subject,text)
 {
     const opt =
         {
-            from : '"SmartGardener" <maddison53@ethereal.email>',
+            from : '"SmartGardener" <smartgardener123@gmail.com>',
             to : email,
             subject : subject,
             text : text

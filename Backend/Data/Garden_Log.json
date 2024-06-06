@@ -1,1 +1,15 @@
-[{"id":"1d51bd43-a032-4287-bf99-c6cbea7ef581","log":[{"id":"1","temperature":[],"soil":[]},{"id":"1","temperature":[],"soil":[]}]}]
+[
+  {
+    "id": "1d51bd43-a032-4287-bf99-c6cbea7ef581",
+    "log": [
+      {
+        "id": "1",
+        "temperature": [
+        ],
+        "soil": [],
+        "last_check": true
+      }
+    ]
+
+  }
+]
