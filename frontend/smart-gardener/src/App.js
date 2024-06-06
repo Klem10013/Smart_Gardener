@@ -8,6 +8,7 @@ import Gardens from "./gardens/code/gardens";
 import Body from "./homepage/code/bodyhome";
 
 import './App.css';
+import SeeDetails from "./gardens/code/seeDetails";
 
 export const ADDR = 'http://localhost:3001/';
 
@@ -18,7 +19,7 @@ function App() {
                 <Route path="/" element={<Body/>} />
                 <Route path="/create_user" element={<CreateUser/>} />
                 <Route path="/connect_user" element={<ConnectUser/>} />
-                
+                <Route path="/seeDetails" element={<SeeDetails/>}/>
                 <Route path="/gardens" element={<Gardens/>} />
             </Routes>
         </Router>  
