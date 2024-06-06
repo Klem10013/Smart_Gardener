@@ -15,7 +15,7 @@ router.post("/add_flower",async (req, res, _next) =>
         console.log("Add plant is aboard")
         Response.status = "Error"
         Response.message = "Information missing"
-        res.json(JSON.stringify(Response));
+        res.json(Response);
         return;
     }
     const user = {
@@ -27,7 +27,7 @@ router.post("/add_flower",async (req, res, _next) =>
         console.log("Add plant is aboard")
         Response.status = "Error"
         Response.message = "pwd wrong"
-        res.json(JSON.stringify(Response));
+        res.json(Response);
         return;
     }
     const garden =
@@ -43,14 +43,14 @@ router.post("/add_flower",async (req, res, _next) =>
         console.log("Add plant is good")
         Response.status = "Good"
         Response.message = "Plant was added"
-        res.json(JSON.stringify(Response));
+        res.json(Response);
     }
     else
     {
         console.log("Add plant is aboard")
         Response.status = "Error"
         Response.message = "smth went wrong"
-        res.json(JSON.stringify(Response));
+        res.json(Response);
     }
 })
 
@@ -67,7 +67,7 @@ router.delete("/delete_flower",async (req,res,_next) =>
         console.log("delete flower aboard")
         Response.status = "Error"
         Response.message = "Information missing"
-        res.json(JSON.stringify(Response));
+        res.json(Response);
         return;
     }
     const user = {
@@ -80,12 +80,12 @@ router.delete("/delete_flower",async (req,res,_next) =>
         console.log("delete aboard")
         Response.status = "Error"
         Response.message = "Error delete flower"
-        res.json(JSON.stringify(Response));
+        res.json(Response);
         return;
     }
     Response.status = "Good"
     Response.message = "flower deleted"
-    res.json(JSON.stringify(Response));
+    res.json(Response);
 })
 
 

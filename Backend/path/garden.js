@@ -14,7 +14,7 @@ router.post("/create_garden", async (req, res, _next) => {
         console.log("creation aboard")
         Response.status = "Error"
         Response.message = "Information missing"
-        res.json(JSON.stringify(Response));
+        res.json(Response);
         return;
     }
     const user = {
@@ -26,7 +26,7 @@ router.post("/create_garden", async (req, res, _next) => {
         console.log("creation aboard")
         Response.status = "Error"
         Response.message = "pwd wrong"
-        res.json(JSON.stringify(Response));
+        res.json(Response);
         return;
     }
 
@@ -42,7 +42,7 @@ router.post("/create_garden", async (req, res, _next) => {
     const garden = await dml.add_garden(gard);
     Response.status = "Good"
     Response.message = garden;
-    res.json(JSON.stringify(Response));
+    res.json(Response);
 
 
 });
@@ -59,7 +59,7 @@ router.post("/add_user_garden",async (req,res,_next) => {
         console.log("creation aboard")
         Response.status = "Error"
         Response.message = "Information missing"
-        res.json(JSON.stringify(Response));
+        res.json(Response);
         return;
     }
     const user =
@@ -72,19 +72,19 @@ router.post("/add_user_garden",async (req,res,_next) => {
         console.log("creation aboard")
         Response.status = "Error"
         Response.message = "pwd wrong"
-        res.json(JSON.stringify(Response));
+        res.json(Response);
         return;
     }
     if (await dml.add_user_to_garden(user,resJson.id_add,resJson.id_garden)) {
         Response.status = "Good"
         Response.message = "USer add";
-        res.json(JSON.stringify(Response));
+        res.json(Response);
     }
     else
     {
         Response.status = "Bad"
         Response.message = "USer not add";
-        res.json(JSON.stringify(Response));
+        res.json(Response);
     }
 
 })
@@ -101,7 +101,7 @@ router.post("/add_data_garden",async (req,res,_next) =>
         console.log("creation aboard")
         Response.status = "Error"
         Response.message = "Information missing"
-        res.json(JSON.stringify(Response));
+        res.json(Response);
         return;
     }
     const garden = {
@@ -116,13 +116,13 @@ router.post("/add_data_garden",async (req,res,_next) =>
     {
         Response.status = "Good"
         Response.message = "Data has been added";
-        res.json(JSON.stringify(Response));
+        res.json(Response);
     }
     else
     {
         Response.status = "Bad"
         Response.message = "Data can not be added";
-        res.json(JSON.stringify(Response));
+        res.json(Response);
     }
 
 
@@ -142,7 +142,7 @@ router.post("/get_data_garden",async (req,res,_next) =>
         console.log("creation aboard")
         Response.status = "Error"
         Response.message = "Information missing"
-        res.json(JSON.stringify(Response));
+        res.json(Response);
         return;
     }
     const user = {
@@ -156,7 +156,7 @@ router.post("/get_data_garden",async (req,res,_next) =>
         console.log("creation aboard")
         Response.status = "Error"
         Response.message = "Error to get data"
-        res.json(JSON.stringify(Response));
+        res.json(Response);
         return;
     }
     Response.status = "Good"
@@ -178,7 +178,7 @@ router.delete("/delete_garden",async (req,res,_next) =>
         console.log("delet garden aboard")
         Response.status = "Error"
         Response.message = "Information missing"
-        res.json(JSON.stringify(Response));
+        res.json(Response);
         return;
     }
     const user = {
@@ -191,12 +191,12 @@ router.delete("/delete_garden",async (req,res,_next) =>
         console.log("creation aboard")
         Response.status = "Error"
         Response.message = "Error delet garden"
-        res.json(JSON.stringify(Response));
+        res.json(Response);
         return;
     }
     Response.status = "Good"
     Response.message = "Garden deleted"
-    res.json(JSON.stringify(Response));
+    res.json(Response);
 })
 
 

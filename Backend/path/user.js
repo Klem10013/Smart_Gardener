@@ -15,7 +15,7 @@ router.post("/create_user",async (req,res,_next) => {
         console.log("creation aboard")
         Response.status = "Error"
         Response.message = "Information missing"
-        res.json(JSON.stringify(Response));
+        res.json(Response);
         return;
     }
     const user = {
@@ -25,7 +25,7 @@ router.post("/create_user",async (req,res,_next) => {
     const User = await dml.add_user(user);
     Response.status = "Good"
     Response.message = User;
-    res.json(JSON.stringify(Response));
+    res.json(Response);
 
 })
 
@@ -41,7 +41,7 @@ router.post("/connect_user",async (req,res,_next) => {
         console.log("connection aboard")
         Response.status = "Error"
         Response.message = "Information missing"
-        res.json(JSON.stringify(Response));
+        res.json(Response);
         return;
     }
 
@@ -57,7 +57,7 @@ router.post("/connect_user",async (req,res,_next) => {
         console.log("connection aboard")
         Response.status = "Error"
         Response.message = "Wrong user"
-        res.json(JSON.stringify(Response));
+        res.json(Response);
         return;
     }
     const user = {
@@ -70,14 +70,14 @@ router.post("/connect_user",async (req,res,_next) => {
         console.log("connection aboard")
         Response.status = "Error"
         Response.message = "pwd wrong"
-        res.json(JSON.stringify(Response));
+        res.json(Response);
         return;
     }
     const all_g = await dml.get_garden_from_user(user)
     user.gardens = all_g
     Response.status = "Good"
     Response.message = user;
-    res.json(JSON.stringify(Response));
+    res.json(Response);
 
 })
 
