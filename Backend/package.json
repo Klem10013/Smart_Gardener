@@ -5,7 +5,9 @@
     "@azure/service-bus": "^7.9.4",
     "azure-iot-common": "^1.13.2",
     "azure-iothub": "^1.16.5",
+    "cors": "^2.8.5",
     "express": "^4.19.2",
+    "nodemailer": "^6.9.13",
     "path": "^0.12.7",
     "uuid": "^9.0.1"
   }

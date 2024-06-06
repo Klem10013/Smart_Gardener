@@ -1,5 +1,8 @@
 const express = require("express")
 const app = express()
+const cors = require('cors');
+
+app.use(cors());
 
 app.get("/Server_up",(req,res,_next ) => {
     const status =
@@ -8,6 +11,7 @@ app.get("/Server_up",(req,res,_next ) => {
         }
     res.json(JSON.stringify(status));
 });
+
 
 app.use(express.json());
 app.use("/garden",require("./path/garden"));

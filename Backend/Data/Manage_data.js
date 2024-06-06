@@ -1,6 +1,7 @@
 const fs = require('node:fs');
 const path = require("path");
 const Uuid = require("uuid")
+const email = require('./Email.js')
 
 const rootPath = path.dirname(process.mainModule.filename);
 const dataPath = path.join(rootPath, "Data");
@@ -9,6 +10,7 @@ const USER = "User.json";
 const GARDEN = "Garden.json";
 const LOG = "Garden_Log.json";
 const FLOWER = "Flower.json"
+
 
 async function write_file(filename, data) {
     if (data === undefined) {
@@ -23,6 +25,14 @@ async function readDataRout(entityName) {
     const rawFileContent = await fs.promises.readFile(path_company)
     return JSON.parse(rawFileContent.toString());
 }
+
+
+async function send_email_to_resp()
+{
+    await email.send_mail("clement.bataille@epita.fr","HO c'est les test",
+        "mlshgosdlgksgjsgjgjkis")
+}
+
 
 async function add_garden(data) {
     const filename_Garden = GARDEN;
@@ -41,6 +51,9 @@ async function add_garden(data) {
     const allData_Log = [log, ...olderData_Log];
     await write_file(filename_Garden, JSON.stringify(allData_Garden))
     await write_file(filename_Log,JSON.stringify(allData_Log));
+
+
+
     return data;
 }
 
@@ -170,6 +183,14 @@ async function user_in_garden(user_id,garden_id)
         ((await((await(await readDataRout(GARDEN)).find((garden) => (garden.id === garden_id))).member).find((user) => (user === user_id))) !== undefined)
 }
 
+async function is_owner_garden(user_id,garden_id)
+{
+    return (garden_id !== undefined && user_id !== undefined) &&
+        ((await(await readDataRout(USER)).find((user) => (user.id === user_id))) !== undefined) &&
+        ((await(await readDataRout(GARDEN)).find((garden) => (garden.id === garden_id))) !== undefined) &&
+        (await readDataRout(GARDEN)).find((garden) => (garden.id === garden_id)).ownerId === user_id
+}
+
 async function user_exist(user_id,garden_id)
 {
     return (user_id !== undefined) &&
@@ -212,6 +233,64 @@ async function get_all_data(user,garden_id) {
 }
 
 
+async function get_garden_from_user(user)
+{
+    const gardens_id = []
+    const Data_G = await readDataRout(GARDEN)
+    for (let i = 0;i<Data_G.length;i++) {
+        const garden_id = Data_G[i].id
+        if (await user_in_garden(user.id, garden_id)) {
+            gardens_id.push(garden_id)
+        }
+    }
+    return gardens_id
+}
+
+async function get_user(user)
+{
+    const Data_U = await readDataRout(USER);
+    const User  = await Data_U.find((us) => (us.first_name === user.first_name && us.last_name === user.last_name && us.pwd === user.pwd))
+    return User
+}
+
+
+async function delete_garden(user,garden_id)
+{
+    if (await is_owner_garden(user.id,garden_id))
+    {
+        const Data_G = await readDataRout(GARDEN)
+        const Data_L = await readDataRout(LOG)
+        const ind = await Data_G.findIndex((gard) => gard.id === garden_id)
+        const ind_l = await Data_L.findIndex((log) => log.id === garden_id)
+        Data_G.splice(ind,1)
+        Data_L.splice(ind_l,1)
+        await write_file(GARDEN,JSON.stringify(Data_G));
+        await write_file(LOG,JSON.stringify(Data_L))
+        return true
+    }
+    return false
+}
+
+async function delete_flower(user,garden_id,plant_id)
+{
+    if (await user_in_garden(user.id,garden_id))
+    {
+        const Data_G = await readDataRout(GARDEN)
+        const ind = await Data_G.findIndex((gard) => gard.id === garden_id)
+        const ind_f = Data_G[ind].flower_id.findIndex((f) => (f === plant_id))
+        if (ind_f === -1)
+        {
+            return false
+        }
+        Data_G[ind].flower_id.splice(ind_f,1)
+        await write_file(GARDEN,JSON.stringify(Data_G));
+        return true
+    }
+    return false
+}
+
+
+
 module.exports.add_garden = add_garden;
 module.exports.check_mdp = check_mdp;
 module.exports.add_user = add_user
@@ -219,3 +298,8 @@ module.exports.add_user_to_garden = add_user_to_garden
 module.exports.add_data = add_data
 module.exports.add_plant = add_plant
 module.exports.get_all_data = get_all_data
+module.exports.get_garden_from_user = get_garden_from_user
+module.exports.get_user = get_user;
+module.exports.delet_garden = delete_garden
+module.exports.delete_flower = delete_flower
+module.exports.send_email_to_resp = send_email_to_resp
