@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link, useLocation } from "react-router-dom";
-//import Navbar from './navbar';
 
 import '../styles/body.css';
  
@@ -12,7 +11,6 @@ function Body(){
 
     return (
         <>
-            {/* <Navbar /> */}
             {!userId && (
                 <div id="bodyhome-container">
                     <Link to="/" id="bodyhome-title">

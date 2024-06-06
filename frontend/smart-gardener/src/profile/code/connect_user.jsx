@@ -1,7 +1,7 @@
 import { React, useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { useCookie } from "react-cookie";
+import { useCookies } from "react-cookie";
 
 import { ADDR } from '../../App';
 import '../styles/connect_user.css';
@@ -12,7 +12,7 @@ function ConnectUser(){
     const [surname, setSurname] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
-    const [cookie, setCookie, removeCookie] = useCookie["user"];
+    const [cookie, setCookie] = useCookies(["user"]);
 
     useEffect(() => {
         const timeout = setTimeout(() => {
@@ -26,10 +26,12 @@ function ConnectUser(){
         event.preventDefault();
     
         const formData = {
-            "firstname":firstname,
-            "surname":surname,
-            "password":password
+            "first_name":firstname,
+            "last_name":surname,
+            "pwd":password
         };
+
+        console.log(formData);
 
         try {
             const response = await axios.post(ADDR + 'connect_user', formData);

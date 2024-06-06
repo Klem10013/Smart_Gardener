@@ -3,12 +3,13 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 import CreateUser from './profile/code/create_user';
 import ConnectUser from "./profile/code/connect_user";
+import Gardens from "./gardens/code/gardens";
 
 import Body from "./homepage/code/bodyhome";
 
 import './App.css';
 
-export const ADDR = 'http://localhost:3000/';
+export const ADDR = 'http://localhost:3001/';
 
 function App() {
   return(<div id="app">

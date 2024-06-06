@@ -1,26 +1,29 @@
 import { React, useState, useEffect } from 'react';
-import axios from 'axios';
+import { useCookies } from "react-cookie";
 
-import { ADDR } from '../../App';
 import '../styles/gardens.css';
 
-function ConnectUser(){
+function Gardens(){
 
-        try {
-            const response = await axios.get(ADDR + 'get_data_garden', formData);
+    const [cookie] = useCookies(["user"]);
+    //faudra faire des boutons
 
-            
-            if (response.data.status !== "Bad" || response.data.status !== "Error" ){
-                
-            } else {
-                setErrorMessage("An error occured.");
-            }
-        } catch (error) {
-            console.error('Error sending data :', error);
-        }
+    return (
+        <div>
+            <h1>{cookie.user.member[0].first_name}'s gardens</h1>
 
-    return (<>
-    </>
+            <div className="gardens-container">
+                {cookie.user.map((garden, index) => (
+                    <div className="garden-card">
+                        <h2>{garden.name}</h2>
+                        <button >See Details</button>
+                        <button >Delete</button>
+                    </div>
+                ))}
+            </div>
+
+            <button>Add</button>
+        </div>
     );
        
 }
