@@ -12,7 +12,7 @@ function ConnectUser(){
     const [surname, setSurname] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
-    const [cookie, setCookie] = useCookies(["user"]);
+    const [, setCookie] = useCookies(["user"]);
 
     useEffect(() => {
         const timeout = setTimeout(() => {
@@ -36,9 +36,8 @@ function ConnectUser(){
             setFirstname("");
             setSurname("");
             setPassword("");
-            const parseRep = JSON.parse(response.data);
-            if (parseRep.status !== "Bad" && parseRep.status !== "Error" ){
-                setCookie("user",parseRep.message);
+            if (response.status !== "Bad" && response.status !== "Error" ){
+                setCookie("user",response.data.message);
                 window.location.href = `/gardens`;
             } else {
                 setErrorMessage("Names and password doesn't match.");
