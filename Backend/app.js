@@ -12,6 +12,7 @@ app.get("/Server_up",(req,res,_next ) => {
 app.use(express.json());
 app.use("/garden",require("./path/garden"));
 app.use("/user",require("./path/user"));
+app.use("/flower",require("./path/flower"))
 
 
 app.listen(3001);

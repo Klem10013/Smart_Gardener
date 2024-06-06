@@ -1,0 +1,16 @@
+[
+  {
+    "name": "Gardentest",
+    "address": "1456 street New your",
+    "ownerId": "1",
+    "flower_id": [
+      "1"
+    ],
+    "member": [
+      "1",
+      "b66ce242-1528-4940-a07a-c5a5f811abe5"
+    ],
+    "id": "3057205f-e9ef-413e-a224-c0fe6cc97873",
+    "token": "e01441b0-bb65-418d-9f8b-993743ce25d0"
+  }
+]
