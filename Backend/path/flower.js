@@ -55,5 +55,39 @@ router.post("/add_flower",async (req, res, _next) =>
 })
 
 
+router.delete("/delete_flower",async (req,res,_next) =>
+{
+    console.log("Delet_garden")
+    const resJson = req.body;
+    const Response = {
+        message: "",
+        status: ""
+    }
+    if (resJson.id === undefined || resJson.pwd === undefined || resJson.id_garden === undefined || resJson.plant_id === undefined) {
+        console.log("delete flower aboard")
+        Response.status = "Error"
+        Response.message = "Information missing"
+        res.json(JSON.stringify(Response));
+        return;
+    }
+    const user = {
+        id : resJson.id,
+        pwd : resJson.pwd
+    }
+    const de = await dml.delete_flower(user,resJson.id_garden,resJson.plant_id);
+    if (!de)
+    {
+        console.log("delete aboard")
+        Response.status = "Error"
+        Response.message = "Error delete flower"
+        res.json(JSON.stringify(Response));
+        return;
+    }
+    Response.status = "Good"
+    Response.message = "flower deleted"
+    res.json(JSON.stringify(Response));
+})
+
+
 
 module.exports = router

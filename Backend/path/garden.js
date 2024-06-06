@@ -132,6 +132,7 @@ router.post("/add_data_garden",async (req,res,_next) =>
 router.post("/get_data_garden",async (req,res,_next) =>
 {
     console.log("get_data_garden");
+    //await dml.send_email_to_resp()
     const resJson = req.body;
     const Response = {
         message: "",
@@ -163,5 +164,40 @@ router.post("/get_data_garden",async (req,res,_next) =>
     res.json(Response)
     return ;
 })
+
+
+router.delete("/delete_garden",async (req,res,_next) =>
+{
+    console.log("Delet_garden")
+    const resJson = req.body;
+    const Response = {
+        message: "",
+        status: ""
+    }
+    if (resJson.id === undefined || resJson.pwd === undefined || resJson.id_garden === undefined) {
+        console.log("delet garden aboard")
+        Response.status = "Error"
+        Response.message = "Information missing"
+        res.json(JSON.stringify(Response));
+        return;
+    }
+    const user = {
+        id : resJson.id,
+        pwd : resJson.pwd
+    }
+    const de = await dml.delet_garden(user,resJson.id_garden);
+    if (!de)
+    {
+        console.log("creation aboard")
+        Response.status = "Error"
+        Response.message = "Error delet garden"
+        res.json(JSON.stringify(Response));
+        return;
+    }
+    Response.status = "Good"
+    Response.message = "Garden deleted"
+    res.json(JSON.stringify(Response));
+})
+
 
 module.exports = router
