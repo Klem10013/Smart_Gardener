@@ -3,9 +3,12 @@
     "name": "GardenTest",
     "address": "1456 street New your",
     "ownerId": "1",
-    "flower_id": [],
-    "member": [
+    "flower_id": [
       "1"
+    ],
+    "member": [
+      "1",
+      "b66ce242-1528-4940-a07a-c5a5f811abe5"
     ],
     "id": "1d51bd43-a032-4287-bf99-c6cbea7ef581",
     "token": "bed6050b-e816-4b7a-9f2c-3e123f38c706"

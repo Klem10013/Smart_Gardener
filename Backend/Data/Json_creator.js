@@ -7,6 +7,7 @@ const garden = {
     members : [],
     id_garden : undefined,
     plant_id: undefined,
+    last_check : undefined
 }
 
 const user = {

@@ -10,6 +10,11 @@ const USER = "User.json";
 const GARDEN = "Garden.json";
 const LOG = "Garden_Log.json";
 const FLOWER = "Flower.json"
+const MAX_LOG = 10
+const DRY = 8000
+const WATER = 1100
+const MAX_TEMP = 34
+const MIN_TEMP = 10
 
 
 async function write_file(filename, data) {
@@ -27,10 +32,9 @@ async function readDataRout(entityName) {
 }
 
 
-async function send_email_to_resp()
+async function send_email_to_resp(addr,subject,text)
 {
-    await email.send_mail("clement.bataille@epita.fr","HO c'est les test",
-        "mlshgosdlgksgjsgjgjkis")
+    await email.send_mail(addr,subject,text)
 }
 
 
@@ -86,6 +90,7 @@ async function add_data(data,garden,token)
     {
         return false;
     }
+
     const plt = await Garden.flower_id.find((plants) => (plants === garden.plant_id))
     if (plt === undefined)
     {
@@ -99,12 +104,74 @@ async function add_data(data,garden,token)
     if (data.temperature !== undefined)
     {
         Flower.temperature.push(data.temperature)
+        if (Flower.temperature.length>MAX_LOG)
+        {
+            Flower.temperature.shift()
+        }
     }
     if (data.soil !== undefined)
     {
         Flower.soil.push(data.soil)
+        if (Flower.soil.length>MAX_LOG)
+        {
+            Flower.soil.shift()
+        }
     }
+
+    let is_good = true
+
+    let sum_t = 0;
+    let sum_s = 0;
+    Flower.temperature.forEach( num => {
+        sum_t += num;
+    })
+    Flower.soil.forEach(num =>
+    {
+        sum_s += num;
+    })
+
+    const temp_m = sum_t/Flower.temperature.length;
+    const soil_m = sum_s/Flower.soil.length;
+
+    const All_flower = await readDataRout(FLOWER);
+    const this_f = All_flower.find((f) => f.id === garden.plant_id)
+
+    if (soil_m < DRY || soil_m > WATER || temp_m<MIN_TEMP || temp_m>MAX_TEMP)
+    {
+        is_good = false
+    }
+
+
+    let send_email = false
+    if (is_good !== Flower.last_check)
+    {
+        console.log(Log.last_check)
+        console.log(typeof(Log.last_check))
+        send_email = true
+    }
+    Flower.last_check = is_good
     await write_file(LOG,JSON.stringify(DataLog));
+
+
+
+    if (send_email)
+    {
+        const All_user = await readDataRout(USER)
+        const members = Garden.member
+        let subject = "Smart Gardener information about the watering"
+        let text = "The soil need to be check in a short amount of time"
+        if (is_good)
+        {
+            text = "The soil is back to normal"
+        }
+        for(let i = 0;i<members.length;i++)
+        {
+            console.log(members[i])
+            const us = await All_user.find((usr) => (usr.id === members[i]))
+            await send_email_to_resp(us.last_name,subject,text)
+        }
+    }
+
     return true;
 
 }
