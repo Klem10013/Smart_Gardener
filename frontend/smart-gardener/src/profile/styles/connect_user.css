@@ -1,46 +1,33 @@
-#connect-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.padding-center-logo {
-    margin-top: 50px;
-    margin-bottom: 50px;
-}
-
-.connect-field {
-    margin-bottom: 20px;
-}
-
-.connect-label {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 10px;
-}
-
-.connect-input {
+/* Reset body margin and padding to remove default white borders */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
     width: 100%;
-    padding: 5px;
-    font-size: 16px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
 }
 
-#connect-submit {
+.container-fluid {
+    padding: 0; /* Remove default padding from Bootstrap container */
+}
+
+.row {
+    margin: 0; /* Remove default margin from Bootstrap row */
+}
+
+.left-section {
+    background-color: #ccff00; /* Light green */
+    color: black;
+    height: 100vh;
+    text-align: center;
+}
+
+.right-section {
+    background-color: #00cc00; /* Green */
+    height: 100vh;
+}
+
+.btn {
     padding: 10px 20px;
-    font-size: 16px;
-    border: none;
-    border-radius: 5px;
-    background-color: #007bff;
-    color: #fff;
-    cursor: pointer;
-}
-
-#connect-submit:hover {
-    background-color: #0056b3;
-}
-
-#connect-errorMessage {
-    color:red
+    font-size: 18px;
+    border-radius: 20px;
 }

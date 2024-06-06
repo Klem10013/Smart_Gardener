@@ -1,45 +1,33 @@
-body {
-    background-color: rgba(107, 138, 122);
+/* Reset body margin and padding to remove default white borders */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
 }
 
-#bodyhome-container {
+.container-fluid {
+    padding: 0; /* Remove default padding from Bootstrap container */
+}
+
+.row {
+    margin: 0; /* Remove default margin from Bootstrap row */
+}
+
+.left-section {
+    background-color: #ccff00; /* Light green */
+    color: black;
+    height: 100vh;
     text-align: center;
 }
 
-#bodyhome-title img {
-    margin-top: 150px;
-    width: 100px;
-    height: auto;
+.right-section {
+    background-color: #00cc00; /* Green */
+    height: 100vh;
 }
 
-#bodyhome-title-text {
-    font-size: 24px;
-    font-weight: bold;
-    text-decoration: none;
-    color: black;
-}
-
-#bodyhome-description-text {
+.btn {
+    padding: 10px 20px;
     font-size: 18px;
-    font-weight: bold;
-    text-decoration: none;
-    color: black;
-}
-
-.navbar-button {
-    display: inline-block;
-    margin: 10px;
-    text-align: center;
-}
-
-.navbar-button div {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.navbar-button img {
-    width: 50px;
-    height: auto;
-    margin-bottom: 5px;
+    border-radius: 20px;
 }
