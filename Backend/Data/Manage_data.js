@@ -12,7 +12,7 @@ const LOG = "Garden_Log.json";
 const FLOWER = "Flower.json"
 const MAX_LOG = 10
 const DRY = 8000
-const WATER = 1100
+const WATER = 11000
 const MAX_TEMP = 34
 const MIN_TEMP = 10
 
