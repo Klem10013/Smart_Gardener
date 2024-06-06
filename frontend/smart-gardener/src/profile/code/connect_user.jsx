@@ -47,7 +47,7 @@ function ConnectUser(){
         }
     };
 
-    return (
+    /*return (
         <div className="padding-center-logo">
             <Link to="/">
                 <img src="../../../data/logo.png" alt="error_loading_logo" />
@@ -71,6 +71,34 @@ function ConnectUser(){
                 <button id="connect-submit" type="submit">Connect</button>
             </form>
             {errorMessage && (<p id='connect-errorMessage'>{errorMessage}</p>)}
+        </div>
+    );*/
+    return (
+        <div className="container-fluid vh-100 align-items-center justify-content-center">
+            <div className="row ">
+                <div className="col-md-6 left-section d-flex flex-column justify-content-center align-items-center">
+                    <h1 className="mb-4">Smart Gardener</h1>
+                    <form className="w-75">
+                        <div className="form-floating mb-3">
+                            <input type="text" className="form-control" id="floatingInput"
+                                   placeholder="name" fdprocessedid="9e89nj"/>
+                            <label htmlFor="floatingInput">Name</label>
+                        </div>
+                        <div className="form-floating mb-3">
+                            <input type="email" className="form-control" id="floatingInput"
+                                   placeholder="name@example.com" fdprocessedid="9e89nj"/>
+                            <label htmlFor="floatingInput">Email address</label>
+                        </div>
+                        <div className="form-floating mb-3">
+                            <input type="password" className="form-control" id="floatingInput"
+                                   placeholder="name@example.com" fdprocessedid="9e89nj"/>
+                            <label htmlFor="floatingInput">Password</label>
+                        </div>
+                        <button type="submit" className="btn btn-primary w-100" onClick={handleSubmit}>Submit</button>
+                    </form>
+                </div>
+                <div className="col-md-6 right-section"></div>
+            </div>
         </div>
     );
        

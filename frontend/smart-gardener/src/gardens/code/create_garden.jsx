@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { useCookies } from "react-cookie";
 
 import { ADDR } from '../../App';
-import '../styles/create_user.css';
 
 function CreateGarden(){
 
