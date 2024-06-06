@@ -164,21 +164,32 @@ async function add_plant(garden, plant) {
         return false;
     }
     const garden_id = garden.id;
-    const Data = await readDataRout(GARDEN)
+    const Data_Garden = await readDataRout(GARDEN)
     const Data_Plant = await readDataRout(FLOWER);
-    const Garden_index = await Data.findIndex((garden) => (garden.id === garden_id));
+    const length = Data_Plant.length;
+    const Garden_index = await Data_Garden.findIndex((garden) => (garden.id === garden_id));
     const Plant_index = await Data_Plant.findIndex((plants) => (plants.id === plant.id));
-    if (Garden_index === -1 || Plant_index === -1) {
-        return false;
-    }
-    const Garden = Data[Garden_index];
-    const plt = await Garden.flower_id.find((plants) => (plants === plant.id))
-    if (plt !== undefined) {
+
+    if (Garden_index === -1 ) {
+
         return false;
     }
 
-    Data[Garden_index].flower_id.push(plant.id);
-    await write_file(GARDEN, JSON.stringify(Data))
+    if(Plant_index === -1)
+    {
+        await add_flower_db(plant.name);
+        await add_plant(garden,plant);
+        return true;
+    }
+    const Garden = Data_Garden[Garden_index];
+    const plt = await Garden.flower_id.find((plants) => (plants === plant.id))
+    if (plt !== undefined) {
+
+        return false;
+    }
+
+    Data_Garden[Garden_index].flower_id.push(plant.id);
+    await write_file(GARDEN, JSON.stringify(Data_Garden))
     const DataLog = await readDataRout(LOG);
     const Log = DataLog[await DataLog.findIndex((log) => (log.id === Garden.id))]
     const Flower = {
