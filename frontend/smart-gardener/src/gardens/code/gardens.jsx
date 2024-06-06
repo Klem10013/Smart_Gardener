@@ -18,6 +18,7 @@ function Gardens() {
         newGardensList.splice(index,1);
         cookie.user.gardens = newGardensList;
         setCookie("user",cookie);
+        //Il faut mettre le cookie à jour
     };
 
     const handleAddGarden = () => {

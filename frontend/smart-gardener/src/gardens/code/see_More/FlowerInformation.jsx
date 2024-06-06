@@ -5,13 +5,12 @@ import axios from "axios";
 import {ADDR} from "../../../App";
 import "../../styles/seeDetails.css"
 
-function UserInformation() {
+function FlowerInformation() {
 
-    const [member, setMember] = useState([])
-    const [cookie, setCookie] = useCookies(["user"]);
+    const [flower, setFlower] = useState([])
+    const [cookie, ] = useCookies(["user"]);
 
     useEffect(() => {
-        console.log(cookie.id_Garden)
         const formData = {
             "id": cookie.user.id,
             "pwd": cookie.user.pwd,
@@ -19,19 +18,30 @@ function UserInformation() {
         };
         axios.post(ADDR + 'garden/get_data_garden', formData).then((response) => {
             const data = response.data.message
-            const member = data.member
-            setMember(member)
-            console.log(data)
-            console.log(member)
+            const flower = data.flower
+            setFlower(flower)
         });
 
     }, []);
+
+    const handleSeeInfos = () => {
+
+    };
+
+    const handleDelete = (index) => {
+
+    };
+
+    const handleAddFlower = () => {
+        
+    };
+
     return (<>
             <Container>
                 <Row style={{border: "2px solid #ccc" , background : "#B7B597"}}>
-                    <div key={"title_hours"} className="header">All Members
+                    <div key={"title_hours"} className="header">All Flowers
                     </div>
-                    {member.map((mem) => {
+                    {flower.map((mem, index) => {
                         return (<ListGroup style={{border: "2px solid #ccc"}}>
                             <div className={"container"} style={{position: "relative"}}>
                                 <div style={{
@@ -40,17 +50,20 @@ function UserInformation() {
                                     left: "auto",
                                     textAlign: "left",
                                     fontSize: 13
-                                }}>
-                                    <p style={{marginBottom: 5}}><b>Member Name : </b> {mem.first_name}</p>
-                                    <p style={{marginBottom: 20}}><b>Member Address : </b>{mem.last_name}</p>
+                                    }}>
+                                    <p style={{marginBottom: 5}}><b>Flower Name : </b> {mem.first_name}</p>
+                                    <p style={{marginBottom: 20}}><b>Flower Temp : </b>{mem.last_name}</p>
+                                    <button onClick={()=>handleSeeInfos(/*voir c'est quelle fleur*/)} className="see-details-button">See Details</button>
+                                    <button onClick={()=>handleDelete(index)} className="delete-button">Delete</button>
                                 </div>
                             </div>
                         </ListGroup>)
                     })}
+                    <button onClick={()=>handleAddFlower()} className="add-button">Add</button>
                 </Row>
             </Container>
         </>
     )
 }
 
-export default UserInformation;
+export default FlowerInformation;
