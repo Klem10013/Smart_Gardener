@@ -5,9 +5,11 @@ import '../styles/gardens.css';
 
 function Gardens() {
 
-    const [cookie] = useCookies(["user"]);
+    const [cookie,setCookie] = useCookies(["user"]);
 
-    const handleSeeDetails = (event) => {
+    const handleSeeDetails = (event) =>{
+        console.log(event)
+        setCookie("id_Garden",event)
         window.location.href = 'seeDetails'
     };
 
@@ -21,9 +23,9 @@ function Gardens() {
 
             <div className="gardens-container">
                 {cookie.user.gardens.map((garden, index) => (
-                    <div className="garden-card" key={index}>
+                    <div className="garden-card" key={cookie.user.gardens[index]}>
                         <h2>{garden}</h2>
-                        <button onClick={()=>handleSeeDetails()} className="see-details-button">See Details</button>
+                        <button onClick={()=>handleSeeDetails(cookie.user.gardens[index])} className="see-details-button">See Details</button>
                         <button onClick={()=>handleDelete()} className="delete-button">Delete</button>
                     </div>
                 ))}
