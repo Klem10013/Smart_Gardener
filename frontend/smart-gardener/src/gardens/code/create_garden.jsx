@@ -26,9 +26,9 @@ function CreateGarden(){
             setName("");
             setAdress("");
             const identity = {
-                "first_name":cookie.user.first_name,
-                "last_name":cookie.user.last_name,
-                "pwd" : cookie.user.pwd
+                first_name:cookie.user.first_name,
+                last_name:cookie.user.last_name,
+                pwd : cookie.user.pwd
             };
     
             try {
@@ -38,6 +38,7 @@ function CreateGarden(){
                 if (responseCookie.data.status !== "Bad" && responseCookie.data.status !== "Error" ){
                     responseCookie.data.message.first_name = identity.first_name;
                     responseCookie.data.message.last_name = identity.last_name;
+                    console.log(responseCookie.data.message)
                     setCookie("user",responseCookie.data.message);
                     window.location.href = '/gardens';
                 } else {
