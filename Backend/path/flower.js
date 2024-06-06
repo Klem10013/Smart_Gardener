@@ -116,8 +116,8 @@ router.post("/add_flower_db", async (req, res, _next) => {
 
 
 
-router.get("/add_flower_db", async (req, res, _next) => {
-    console.log("Add new flower to the database");
+router.get("/get_flower_db", async (req, res, _next) => {
+    console.log("Get new flower to the database");
     const resJson = req.body;
     const Response = {
         message: "",
