@@ -28,6 +28,7 @@ function AddFlowers(){
             const response = await axios.post(ADDR + 'flower/add_flower', formData);
             console.log(response.data);
             setName("");
+            window.location.href = '/seeDetails';
 
         } catch (error) {
             console.error('Error sending data :', error);

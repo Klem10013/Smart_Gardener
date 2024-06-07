@@ -19,6 +19,11 @@ function FlowerInformation() {
 
     const [cookie] = useCookies(["user"]);
     const [visibleDetails, setVisibleDetails] = useState([]);
+    const [temperatureData, setTemperatureData] = useState([])
+    const [soilData, setSoilData] = useState([])
+
+    const [showPopup, setShowPopup] = useState(false);
+    const [selectedProduct, setSelectedProduct] = useState(null);
 
     useEffect(() => {
         const formData = {
@@ -35,9 +40,37 @@ function FlowerInformation() {
                 visibility.push(false)
             }
             setVisibleDetails(visibility)
-            setLog(Object.values(data.log.log));
+            setLog(data.log.log);
+            console.log("Log = ",data.log.log.length)
+            console.log("flower : ", flower);
+            console.log("response.data.message : ", response.data.message);
+
+
+            // Transform temperatures and soils arrays for recharts
+            const tD = []
+            const sD = []
+
+            for (let i = 0; i < data.log.log.length; i++) {
+                const fl = data.log.log[i]
+                while (fl.temperature.length<10)
+                {
+                    fl.temperature.push(0)
+                }
+                tD.push(fl.temperature.map((value, index) => ({
+                    index,
+                    value,
+                })))
+                while (fl.soil.length<10)
+                {
+                    fl.soil.push(0)
+                }
+                sD.push(fl.soil.map((value, index) => ({index, value})));
+            }
+            setTemperatureData(tD)
+            setSoilData(sD)
+
         });
-    }, [cookie.id_Garden, cookie.user.id, cookie.user.pwd]);
+    }, []);
 
     const handleSeeInfos = (index) => {
         const vis = [...visibleDetails]
@@ -46,6 +79,14 @@ function FlowerInformation() {
     };
 
     const handleDelete = (index) => {
+        const formData = {
+            id: cookie.user.id,
+            pwd: cookie.user.pwd,
+            id_garden: cookie.id_Garden,
+            plant_id : log[index].id
+        };
+        axios.post(ADDR + "flower/delete_flower", formData).then((response) => {})
+        window.location.href = '/seeDetails';
     };
 
     const handleAddFlower = () => {
@@ -53,17 +94,6 @@ function FlowerInformation() {
         window.location.href = '/addFlowers'
     };
 
-    // Transform temperatures and soils arrays for recharts
-    const temperatureData = {}
-    const soilData = {}
-    for (let i = 0; i < log.length; i++) {
-        const fl = log[i]
-        temperatureData.i = fl.temperature.map((value, index) => ({
-            index,
-            value,
-        }));
-        soilData.i = fl.soil.map((value, index) => ({index, value}));
-    }
 
     const graphWidth = 200;
     const graphHeight = 150;
@@ -106,7 +136,7 @@ function FlowerInformation() {
                                                     style={{transform: "translateX(-40px)"}}
                                                     width={graphWidth}
                                                     height={graphHeight}
-                                                    data={temperatureData.index}
+                                                    data={temperatureData[index]}
                                                 >
                                                     <CartesianGrid strokeDasharray="3 3"/>
                                                     <XAxis dataKey="index"/>
@@ -120,7 +150,7 @@ function FlowerInformation() {
                                                     style={{transform: "translateX(-40px)"}}
                                                     width={graphWidth}
                                                     height={graphHeight}
-                                                    data={soilData.index}
+                                                    data={soilData[index]}
                                                 >
                                                     <CartesianGrid strokeDasharray="3 3"/>
                                                     <XAxis dataKey="index"/>

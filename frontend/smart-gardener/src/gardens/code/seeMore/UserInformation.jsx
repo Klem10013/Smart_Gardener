@@ -1,4 +1,4 @@
-import React, {useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import {useCookies} from "react-cookie";
 import {Container, Row} from "react-bootstrap";
 import {ADDR} from "../../../App";
@@ -36,13 +36,12 @@ function UserInformation() {
                     </div>
                     {member.map((mem) => {
                         return (
-
                             <div
                                 className="gardens-container"
                                 style={{paddingTop: 5}}
                                 key={mem.last_name}
                             >
-                                <div className="garden-card" key={mem.last_name+"Card"}>
+                                <div className="garden-card" key={mem.last_name + "Card"}>
                                     <div className="title-container">
                                         <h2>{mem.last_name}</h2>
                                     </div>
