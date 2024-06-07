@@ -10,7 +10,6 @@ function UserInformation() {
     const [cookie,] = useCookies(["user"]);
 
 
-
     useEffect(() => {
         //Come();
         const formData = {
