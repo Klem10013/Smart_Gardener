@@ -10,6 +10,8 @@ import SeeDetails from "./gardens/code/seeDetails";
 import AddFlowers from "./gardens/code/seeMore/addFlowers"
 
 import './bootstrap.min.css';
+import SimpleNavbar from "./NavBar";
+import AddUser from "./gardens/code/seeMore/addUser";
 
 export const ADDR = 'http://localhost:3001/';
 
@@ -19,6 +21,7 @@ function App() {
           padding: 0,
       border: 0,
       }}>
+      <SimpleNavbar/>
         <Router>
             <Routes>
                 <Route path="/" element={<Body/>} />
@@ -28,6 +31,7 @@ function App() {
                 <Route path="/gardens" element={<Gardens/>} />
                 <Route path="/create_garden" element={<CreateGarden/>} />
                 <Route path="/addFlowers" element={<AddFlowers/>} />
+                <Route path="/addUser" element={<AddUser/>} />
             </Routes>
         </Router>  
     </div>)

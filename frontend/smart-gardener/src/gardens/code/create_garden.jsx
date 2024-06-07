@@ -69,7 +69,7 @@ function CreateGarden(){
                     <input className='register-input' type="text" value={adress} onChange={(event) => setAdress(event.target.value)}/>
                 </div>
     
-                <button id="register-submit" type="submit">Create Account</button>
+                <button id="register-submit" type="submit">Create Garden</button>
             </form>
         </div>
     );

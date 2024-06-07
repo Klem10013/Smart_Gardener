@@ -19,10 +19,10 @@ function CreateUser(){
         };
 
         try {
-            await axios.post(ADDR + 'create_user', formData);
+            await axios.post(ADDR + 'user/create_user', formData);
             setFirstname("");
             setSurname("");
-            window.location.href = ADDR;
+            window.location.href = '/';
         } catch (error) {
             console.error('Error sending data :', error);
         }
@@ -40,8 +40,8 @@ function CreateUser(){
                 </div>
     
                 <div className="register-field">
-                    <label htmlFor="surname" className="register-label">Surname:</label>
-                    <input className='register-input' type="text" value={surname} onChange={(event) => setSurname(event.target.value)}/>
+                    <label htmlFor="surname" className="register-label">Address mail:</label>
+                    <input className='register-input' type="address" value={surname} onChange={(event) => setSurname(event.target.value)}/>
                 </div>
     
                 <button id="register-submit" type="submit">Create Account</button>

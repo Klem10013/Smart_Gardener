@@ -103,7 +103,7 @@ function FlowerInformation() {
             <Container>
                 <Row>
                     <div key={"title_hours"} className="header">
-                        Flowers
+                        <h1>Flowers</h1>
                     </div>
                     {flower &&
                         flower.map((mem, index) => {

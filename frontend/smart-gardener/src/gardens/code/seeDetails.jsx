@@ -6,8 +6,8 @@ import FlowerInformations from "./seeMore/FlowerInformation";
 function SeeDetails() {
     return (<>
         <div className="left-section d-flex justify-content-center align-items-center">
-            <UserInformation/>
-            <FlowerInformations/>
+                <UserInformation/>
+                <FlowerInformations/>
         </div>
     </>)
 }

@@ -319,13 +319,18 @@ async function delete_garden(user, garden_id) {
 async function delete_flower(user, garden_id, plant_id) {
     if (await user_in_garden(user.id, garden_id)) {
         const Data_G = await readDataRout(GARDEN)
+        const Data_L = await readDataRout(LOG)
         const ind = await Data_G.findIndex((gard) => gard.id === garden_id)
+        const indl = await Data_L.findIndex((log) => log.id === garden_id)
         const ind_f = Data_G[ind].flower_id.findIndex((f) => (f === plant_id))
         if (ind_f === -1) {
             return false
         }
+        const ind_l = await Data_L[indl].log.findIndex((log) => log.id === plant_id)
         Data_G[ind].flower_id.splice(ind_f, 1)
+        Data_L[indl].log.splice(ind_l, 1)
         await write_file(GARDEN, JSON.stringify(Data_G));
+        await write_file(LOG, JSON.stringify(Data_L));
         return true
     }
     return false

@@ -26,13 +26,18 @@ function UserInformation() {
             })
         })
     }, [cookie.id_Garden, cookie.user.id, cookie.user.pwd]);
+    const handleAddUser = () => {
+        //Cookies ?
+        window.location.href = '/addUser'
+    };
 
     return (
         <>
             <Container>
                 <Row>
                     <div key={"title_hours"} className="header">
-                        All Members
+                        <h1>All Members</h1>
+                        <h5>--</h5>
                     </div>
                     {member.map((mem) => {
                         return (
@@ -41,15 +46,18 @@ function UserInformation() {
                                 style={{paddingTop: 5}}
                                 key={mem.last_name}
                             >
-                                <div className="garden-card" key={mem.last_name + "Card"}>
-                                    <div className="title-container">
-                                        <h2>{mem.last_name}</h2>
+                                <div key={mem.last_name + "Card"}>
+                                    <div>
+                                        <h5>Address : {mem.last_name}</h5>
+                                        <h5>Name : {mem.first_name}</h5>
+                                        <h5 >Id : {mem.id}</h5>
+                                        <h5>--</h5>
                                     </div>
                                 </div>
-
                             </div>)
                     })}
                 </Row>
+                <button onClick={() => handleAddUser()} className="add-button">Add</button>
             </Container>
         </>
     )
