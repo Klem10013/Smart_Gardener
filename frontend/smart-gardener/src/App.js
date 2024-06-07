@@ -7,6 +7,7 @@ import Gardens from "./gardens/code/gardens";
 import CreateGarden from "./gardens/code/create_garden";
 import Body from "./homepage/code/bodyhome";
 import SeeDetails from "./gardens/code/seeDetails";
+import AddFlowers from "./gardens/code/seeMore/addFlowers"
 
 import './bootstrap.min.css';
 
@@ -26,6 +27,7 @@ function App() {
                 <Route path="/seeDetails" element={<SeeDetails/>}/>
                 <Route path="/gardens" element={<Gardens/>} />
                 <Route path="/create_garden" element={<CreateGarden/>} />
+                <Route path="/addFlowers" element={<AddFlowers/>} />
             </Routes>
         </Router>  
     </div>)

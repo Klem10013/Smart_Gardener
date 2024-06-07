@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {useCookies} from "react-cookie";
-import {Container, Row, ListGroup} from "react-bootstrap";
+import {Container, Row } from "react-bootstrap";
 import axios from "axios";
 import {ADDR} from "../../../App";
 import "../../styles/seeDetails.css";
@@ -11,7 +11,6 @@ import {
     YAxis,
     CartesianGrid,
     Tooltip,
-    Legend,
 } from "recharts";
 
 function FlowerInformation() {
@@ -36,12 +35,9 @@ function FlowerInformation() {
                 visibility.push(false)
             }
             setVisibleDetails(visibility)
-            console.log( data.log.log)
             setLog(Object.values(data.log.log));
-            console.log("flower : ", flower);
-            console.log("response.data.message : ", response.data.message);
         });
-    }, []);
+    }, [cookie.id_Garden, cookie.user.id, cookie.user.pwd]);
 
     const handleSeeInfos = (index) => {
         const vis = [...visibleDetails]
@@ -53,12 +49,13 @@ function FlowerInformation() {
     };
 
     const handleAddFlower = () => {
+        //Cookies ?
+        window.location.href = '/addFlowers'
     };
 
     // Transform temperatures and soils arrays for recharts
     const temperatureData = {}
     const soilData = {}
-    console.log("Log = ",log)
     for (let i = 0; i < log.length; i++) {
         const fl = log[i]
         temperatureData.i = fl.temperature.map((value, index) => ({
@@ -67,8 +64,6 @@ function FlowerInformation() {
         }));
         soilData.i = fl.soil.map((value, index) => ({index, value}));
     }
-    console.log(temperatureData)
-    //const soilData = soils.map((value, index) => ({index, value}));
 
     const graphWidth = 200;
     const graphHeight = 150;
@@ -137,9 +132,11 @@ function FlowerInformation() {
                                         )}
                                     </div>
                                 </div>
+                                
                             );
                         })}
                 </Row>
+                <button onClick={() => handleAddFlower()} className="add-button">Add</button>
             </Container>
         </>
     );

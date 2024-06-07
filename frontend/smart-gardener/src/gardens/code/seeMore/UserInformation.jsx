@@ -1,7 +1,6 @@
-import React, {useEffect, useState, useCallback} from "react";
+import React, {useEffect, useState } from "react";
 import {useCookies} from "react-cookie";
 import {Container, Row} from "react-bootstrap";
-import axios from "axios";
 import {ADDR} from "../../../App";
 import "../../styles/seeDetails.css";
 
@@ -11,7 +10,6 @@ function UserInformation() {
 
 
     useEffect(() => {
-        //Come();
         const formData = {
             id: cookie.user.id,
             pwd: cookie.user.pwd,
@@ -27,7 +25,7 @@ function UserInformation() {
                 setMember(data.member);
             })
         })
-    }, []);
+    }, [cookie.id_Garden, cookie.user.id, cookie.user.pwd]);
 
     return (
         <>

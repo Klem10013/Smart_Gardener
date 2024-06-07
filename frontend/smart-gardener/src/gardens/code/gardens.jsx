@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {useCookies} from "react-cookie";
 
 import '../styles/gardens.css';
-import axios, {all} from "axios";
+import axios from "axios";
 import {ADDR} from "../../App";
 
 function Gardens() {
@@ -12,8 +12,8 @@ function Gardens() {
     console.log(cookie.user.gardens);
 
     const handleSeeDetails = (event) => {
-        setCookie("id_Garden", event)
-        window.location.href = '/seeDetails'
+        setCookie("id_Garden", event);
+        window.location.href = '/seeDetails';
     };
 
     async function haa() {

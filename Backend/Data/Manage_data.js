@@ -164,12 +164,14 @@ async function add_plant(garden, plant) {
         return false;
     }
     const garden_id = garden.id;
+    
     const Data_Garden = await readDataRout(GARDEN)
     const Data_Plant = await readDataRout(FLOWER);
     const length = Data_Plant.length;
+    plant.id = length.toString()
     const Garden_index = await Data_Garden.findIndex((garden) => (garden.id === garden_id));
     const Plant_index = await Data_Plant.findIndex((plants) => (plants.id === plant.id));
-
+    console.log("fsgg")
     if (Garden_index === -1 ) {
 
         return false;
@@ -178,11 +180,10 @@ async function add_plant(garden, plant) {
     if(Plant_index === -1)
     {
         await add_flower_db(plant.name);
-        await add_plant(garden,plant);
-        return true;
     }
     const Garden = Data_Garden[Garden_index];
     const plt = await Garden.flower_id.find((plants) => (plants === plant.id))
+    console.log(plt)
     if (plt !== undefined) {
 
         return false;

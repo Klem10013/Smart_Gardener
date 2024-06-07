@@ -25,6 +25,7 @@ router.post("/add_flower", async (req, res, _next) => {
         console.log("Add plant is aboard")
         Response.status = "Error"
         Response.message = "pwd wrong"
+        console.log("Here")
         res.json(Response);
         return;
     }

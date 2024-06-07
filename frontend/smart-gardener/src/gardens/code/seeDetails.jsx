@@ -1,7 +1,6 @@
 import {React} from "react";
-import {Container, Row, Col,} from 'react-bootstrap';
-import UserInformation from "./see_More/UserInformation";
-import FlowerInformations from "./see_More/FlowerInformation";
+import UserInformation from "./seeMore/UserInformation";
+import FlowerInformations from "./seeMore/FlowerInformation";
 
 
 function SeeDetails() {
