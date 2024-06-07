@@ -14,8 +14,8 @@ function CreateUser(){
         event.preventDefault();
     
         const formData = {
-            "firstname":firstname,
-            "surname":surname
+            "first_name":firstname,
+            "last_name":surname
         };
 
         try {
